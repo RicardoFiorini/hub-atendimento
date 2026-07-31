@@ -1,0 +1,35 @@
+<div class="container" *ngIf="ticket">
+  <button (click)="back()" style="background:#6b7280; margin-bottom:16px;">← Voltar</button>
+
+  <div class="card" style="margin-bottom:16px;">
+    <h2 style="margin-top:0;">{{ ticket.subject }}</h2>
+    <p style="color:#6b7280;">
+      Cliente: <strong>{{ ticket.customerName }}</strong> ({{ ticket.customerContact }}) · Canal: {{ ticket.channel }}
+    </p>
+
+    <label>Status</label>
+    <select [ngModel]="ticket.status" (ngModelChange)="changeStatus($event)">
+      <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
+    </select>
+  </div>
+
+  <div class="card" style="margin-bottom:16px;">
+    <h3 style="margin-top:0;">Conversa</h3>
+    <div *ngFor="let m of ticket.messages"
+         [style.text-align]="m.senderType === 'AGENT' ? 'right' : 'left'"
+         style="margin-bottom:10px;">
+      <div [style.background]="m.senderType === 'AGENT' ? '#2563eb' : '#e5e7eb'"
+           [style.color]="m.senderType === 'AGENT' ? '#fff' : '#1f2937'"
+           style="display:inline-block; padding:10px 14px; border-radius:10px; max-width:70%;">
+        <strong style="font-size:12px; display:block;">{{ m.author }}</strong>
+        {{ m.content }}
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <label>Responder</label>
+    <textarea rows="3" [(ngModel)]="newMessage"></textarea>
+    <button style="margin-top:10px;" (click)="sendMessage()">Enviar</button>
+  </div>
+</div>

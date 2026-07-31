@@ -1,0 +1,16 @@
+#!/bin/sh
+MAVEN_PROJECTBASEDIR=$(cd "$(dirname "$0")" && pwd)
+WRAPPER_JAR="$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.jar"
+WRAPPER_URL=$(grep wrapperUrl "$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.properties" | cut -d'=' -f2-)
+
+if [ ! -f "$WRAPPER_JAR" ]; then
+  echo "Baixando Maven Wrapper (primeira execucao)..."
+  curl -o "$WRAPPER_JAR" "$WRAPPER_URL" || wget -O "$WRAPPER_JAR" "$WRAPPER_URL"
+fi
+
+JAVACMD="java"
+if [ -n "$JAVA_HOME" ]; then
+  JAVACMD="$JAVA_HOME/bin/java"
+fi
+
+exec "$JAVACMD" -cp "$WRAPPER_JAR" org.apache.maven.wrapper.MavenWrapperMain "$@"

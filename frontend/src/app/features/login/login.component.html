@@ -1,0 +1,23 @@
+<div style="display:flex; align-items:center; justify-content:center; height:100vh;">
+  <div class="card" style="width:340px;">
+    <h2 style="margin-top:0;">Hub de Atendimento</h2>
+    <p style="color:#6b7280; font-size:14px;">Entre com sua conta de agente</p>
+
+    <form (ngSubmit)="submit()" #f="ngForm">
+      <div style="margin-bottom:12px;">
+        <label>E-mail</label>
+        <input type="email" name="email" [(ngModel)]="email" required />
+      </div>
+      <div style="margin-bottom:12px;">
+        <label>Senha</label>
+        <input type="password" name="password" [(ngModel)]="password" required />
+      </div>
+
+      <p *ngIf="error" style="color:#dc2626; font-size:13px;">{{ error }}</p>
+
+      <button type="submit" style="width:100%;" [disabled]="!f.valid || loading">
+        {{ loading ? 'Entrando...' : 'Entrar' }}
+      </button>
+    </form>
+  </div>
+</div>

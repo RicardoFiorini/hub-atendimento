@@ -1,0 +1,53 @@
+<div class="container">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+    <h1>Fila de Atendimento</h1>
+    <div>
+      <span style="margin-right:12px; color:#6b7280;">{{ agentName }}</span>
+      <button (click)="logout()">Sair</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px; display:flex; gap:12px; align-items:flex-end;">
+    <div style="flex:1;">
+      <label>Status</label>
+      <select [(ngModel)]="statusFilter" (change)="load()">
+        <option value="">Todos</option>
+        <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
+      </select>
+    </div>
+    <div style="flex:1;">
+      <label>Canal</label>
+      <select [(ngModel)]="channelFilter" (change)="load()">
+        <option value="">Todos</option>
+        <option *ngFor="let c of channelOptions" [value]="c">{{ c }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <p *ngIf="loading">Carregando...</p>
+    <table *ngIf="!loading" style="width:100%; border-collapse:collapse;">
+      <thead>
+        <tr style="text-align:left; border-bottom:2px solid #e5e7eb;">
+          <th style="padding:8px;">Assunto</th>
+          <th style="padding:8px;">Cliente</th>
+          <th style="padding:8px;">Canal</th>
+          <th style="padding:8px;">Status</th>
+          <th style="padding:8px;">Prioridade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of tickets" (click)="openTicket(t.id)" style="cursor:pointer; border-bottom:1px solid #f3f4f6;">
+          <td style="padding:8px;">{{ t.subject }}</td>
+          <td style="padding:8px;">{{ t.customerName }}</td>
+          <td style="padding:8px;">{{ t.channel }}</td>
+          <td style="padding:8px;">{{ t.status }}</td>
+          <td style="padding:8px;">{{ t.priority }}</td>
+        </tr>
+        <tr *ngIf="tickets.length === 0">
+          <td colspan="5" style="padding:16px; text-align:center; color:#6b7280;">Nenhum ticket encontrado.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
